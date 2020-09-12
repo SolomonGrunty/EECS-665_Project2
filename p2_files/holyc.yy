@@ -169,13 +169,13 @@ formals		: LPAREN RPAREN
 	 	| LPAREN formalsList RPAREN
 		  {
 		  }
-formalsList	: formalDec1
+formalsList	: formalDecl
 	    	  {
 		  }
-	    	| formalDec1 COMMA formalsList
+	    	| formalDecl COMMA formalsList
 		  {
 		  }
-formalDec1	: type id
+formalDecl	: type id
 	   	  {
 		  }
 fnBody		: LCURLY stmtList RCURLY
@@ -184,7 +184,7 @@ fnBody		: LCURLY stmtList RCURLY
 stmtList	: stmtList stmt
 	 	  {
 		  }
-stmt		: varDec1 SEMICOLON
+stmt		: varDecl SEMICOLON
       		  {
 		  }
 		| assignExp SEMICOLON
@@ -202,10 +202,10 @@ stmt		: varDec1 SEMICOLON
 		| TOCONSOLE exp SEMICOLON
 		  {
 		  }
-		| IF LPAREN exp RPAREN LCURLY stmtlist RCURLY
+		| IF LPAREN exp RPAREN LCURLY stmtList RCURLY
 		  {
 		  }
-		| IF PAREN exp RPAREN LCURLY stmtList RCURLY
+		| IF LPAREN exp RPAREN LCURLY stmtList RCURLY ELSE LCURLY stmtList RCURLY
 		  {
 		  }
 		| RETURN exp SEMICOLON
@@ -219,9 +219,12 @@ stmt		: varDec1 SEMICOLON
 		  }
 assignExp	: lval ASSIGN exp
 	  	  {
+			$$ = $2;
+			$1 = $2;
 		  }
 fncall		: id LPAREN RPAREN
 		  {
+			$$ = $1;
 		  }
 		| id LPAREN actualsList RPAREN
 		  {
