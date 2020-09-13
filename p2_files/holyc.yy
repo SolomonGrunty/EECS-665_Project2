@@ -117,8 +117,6 @@ project)
  * declarations
 */
 
-%right assignExp
-
 %%
 
 /* TODO: add productions for the other nonterminals in the 
