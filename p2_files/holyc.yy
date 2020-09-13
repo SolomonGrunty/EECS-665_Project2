@@ -117,6 +117,15 @@ project)
  * declarations
 */
 
+%precedence DASH NOT
+%left STAR SLASH
+%left CROSS DASH
+%precedence GREATER GREATEREQ LESS LESSEQ
+%precedence EQUALS NOTEQUALS
+%precedence AND
+%precedence OR
+
+
 %%
 
 /* TODO: add productions for the other nonterminals in the 
