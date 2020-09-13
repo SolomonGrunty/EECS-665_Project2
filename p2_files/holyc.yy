@@ -117,6 +117,8 @@ project)
  * declarations
 */
 
+%right assignExp
+
 %%
 
 /* TODO: add productions for the other nonterminals in the 
@@ -124,119 +126,56 @@ project)
    given nonterminals are complete
 */
 program 	: globals
-		  {
-		  }
 
 globals 	: globals decl 
-	  	  { 
-	  	  }
-		| /* epsilon */
-		  {
-		  }
 
 decl 		: varDecl SEMICOLON
-		  { }
-		| fnDecl
+			| fnDecl
 
 varDecl 	: type id
-		  {
-		  }
+
 
 type 		: INT
-	  	  { 
-		  }
-		| INTPTR
-	  	  { 
-		  }
-		| BOOL 
-		  {
-		  }
-		| CHAR
-		  {
-		  }
-		| CHARPTR
-		  {
-		  }
-		| VOID
-		  {
-		  }
+			| INTPTR
+			| BOOL 
+			| CHAR
+			| CHARPTR
+			| VOID
+
 fnDecl		: type id formals fnBody
-		  {
-		  }
+
 formals		: LPAREN RPAREN
-	 	  {
-		  }
-	 	| LPAREN formalsList RPAREN
-		  {
-		  }
+	 		| LPAREN formalsList RPAREN
+
 formalsList	: formalDecl
-	    	  {
-		  }
 	    	| formalDecl COMMA formalsList
-		  {
-		  }
 formalDecl	: type id
-	   	  {
-		  }
+
 fnBody		: LCURLY stmtList RCURLY
-		  {
-		  }
+
 stmtList	: stmtList stmt
-	 	  {
-		  }
+
 stmt		: varDecl SEMICOLON
-      		  {
-		  }
-		| assignExp SEMICOLON
-		  {
-		  }
-		| lval DASHDASH SEMICOLON
-		  {
-		  }
-		| lval CROSSCROSS SEMICOLON
-		  {
-		  }
-		| FROMCONSOLE lval SEMICOLON
-		  {
-		  }
-		| TOCONSOLE exp SEMICOLON
-		  {
-		  }
-		| IF LPAREN exp RPAREN LCURLY stmtList RCURLY
-		  {
-		  }
-		| IF LPAREN exp RPAREN LCURLY stmtList RCURLY ELSE LCURLY stmtList RCURLY
-		  {
-		  }
-		| RETURN exp SEMICOLON
-		  {
-		  }
-		| RETURN SEMICOLON
-		  {
-		  }
-		| fncall SEMICOLON
-		  {
-		  }
+			| assignExp SEMICOLON
+			| lval DASHDASH SEMICOLON
+			| lval CROSSCROSS SEMICOLON
+			| FROMCONSOLE lval SEMICOLON
+			| TOCONSOLE exp SEMICOLON
+			| IF LPAREN exp RPAREN LCURLY stmtList RCURLY
+			| IF LPAREN exp RPAREN LCURLY stmtList RCURLY ELSE LCURLY stmtList RCURLY
+			| RETURN exp SEMICOLON
+			| RETURN SEMICOLON
+			| fncall SEMICOLON
+
 assignExp	: lval ASSIGN exp
-	  	  {
-			$$ = $2;
-			$1 = $2;
-		  }
+
 fncall		: id LPAREN RPAREN
-		  {
-			$$ = $1;
-		  }
-		| id LPAREN actualsList RPAREN
-		  {
-		  }
+			| id LPAREN actualsList RPAREN
 actualsList	: exp
-	    	  {
-		  }
-		| actualsList COMMA exp
-		  {
-		  }
+			| actualsList COMMA exp
+
 exp		: assignExp
-     		| exp DASH exp
+     	| exp DASH exp
 		| exp CROSS exp
 		| exp STAR exp
 		| exp SLASH exp
@@ -251,8 +190,9 @@ exp		: assignExp
 		| NOT exp
 		| DASH term
 		| term
-term		: lval
-      		| INTLITERAL
+
+term	: lval
+      	| INTLITERAL
 		| STRLITERAL
 		| CHARLIT
 		| TRUE
@@ -260,13 +200,12 @@ term		: lval
 		| NULLPTR
 		| LPAREN exp RPAREN
 		| fncall
-lval		: id
-      		| id LBRACE exp RBRACE
+lval	: id
+      	| id LBRACE exp RBRACE
 		| AT id
 		| CARAT id
 id		: ID
-    		  {
-		  }
+
 %%
 
 void holyc::Parser::error(const std::string& err_message){

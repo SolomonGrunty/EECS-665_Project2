@@ -1,0 +1,356 @@
+Nonterminals useless in grammar
+
+    fnDecl
+    formals
+    formalsList
+    formalDecl
+    fnBody
+    stmtList
+    stmt
+    assignExp
+    fncall
+    actualsList
+    exp
+    term
+    lval
+
+
+Terminals unused in grammar
+
+    AND
+    AT
+    ASSIGN
+    BOOLPTR
+    CARAT
+    CHARLIT
+    COMMA
+    CROSS
+    CROSSCROSS
+    DASH
+    DASHDASH
+    ELSE
+    EQUALS
+    FALSE
+    FROMCONSOLE
+    IF
+    INTLITERAL
+    GREATER
+    GREATEREQ
+    LBRACE
+    LCURLY
+    LESS
+    LESSEQ
+    LPAREN
+    NOT
+    NOTEQUALS
+    NULLPTR
+    OR
+    RBRACE
+    RCURLY
+    RETURN
+    RPAREN
+    SLASH
+    STAR
+    STRLITERAL
+    TOCONSOLE
+    TRUE
+    WHILE
+
+
+Rules useless in grammar
+
+   13 decl: fnDecl
+
+   14 fnDecl: type id formals fnBody
+
+   15 formals: LPAREN RPAREN
+   16        | LPAREN formalsList RPAREN
+
+   17 formalsList: formalDecl
+   18            | formalDecl COMMA formalsList
+
+   19 formalDecl: type id
+
+   20 fnBody: LCURLY stmtList RCURLY
+
+   21 stmtList: stmtList stmt
+
+   22 stmt: varDecl SEMICOLON
+   23     | assignExp SEMICOLON
+   24     | lval DASHDASH SEMICOLON
+   25     | lval CROSSCROSS SEMICOLON
+   26     | FROMCONSOLE lval SEMICOLON
+   27     | TOCONSOLE exp SEMICOLON
+   28     | IF LPAREN exp RPAREN LCURLY stmtList RCURLY
+   29     | IF LPAREN exp RPAREN LCURLY stmtList RCURLY ELSE LCURLY stmtList RCURLY
+   30     | RETURN exp SEMICOLON
+   31     | RETURN SEMICOLON
+   32     | fncall SEMICOLON
+
+   33 assignExp: lval ASSIGN exp
+
+   34 fncall: id LPAREN RPAREN
+   35       | id LPAREN actualsList RPAREN
+
+   36 actualsList: exp
+   37            | actualsList COMMA exp
+
+   38 exp: assignExp
+   39    | exp DASH exp
+   40    | exp CROSS exp
+   41    | exp STAR exp
+   42    | exp SLASH exp
+   43    | exp AND exp
+   44    | exp OR exp
+   45    | exp EQUALS exp
+   46    | exp NOTEQUALS exp
+   47    | exp GREATER exp
+   48    | exp GREATEREQ exp
+   49    | exp LESS exp
+   50    | exp LESSEQ exp
+   51    | NOT exp
+   52    | DASH term
+   53    | term
+
+   54 term: lval
+   55     | INTLITERAL
+   56     | STRLITERAL
+   57     | CHARLIT
+   58     | TRUE
+   59     | FALSE
+   60     | NULLPTR
+   61     | LPAREN exp RPAREN
+   62     | fncall
+
+   63 lval: id
+   64     | id LBRACE exp RBRACE
+   65     | AT id
+   66     | CARAT id
+
+
+Grammar
+
+    0 $accept: program "end file"
+
+    1 program: globals
+
+    2 globals: globals decl
+    3        | %empty
+
+    4 decl: varDecl SEMICOLON
+
+    5 varDecl: type id
+
+    6 type: INT
+    7     | INTPTR
+    8     | BOOL
+    9     | CHAR
+   10     | CHARPTR
+   11     | VOID
+
+   12 id: ID
+
+
+Terminals, with rules where they appear
+
+    "end file" (0) 0
+    error (256)
+    AND <transToken> (258)
+    AT <transToken> (259)
+    ASSIGN <transToken> (260)
+    BOOL <transToken> (261) 8
+    BOOLPTR <transToken> (262)
+    CARAT <transToken> (263)
+    CHAR <transToken> (264) 9
+    CHARLIT <transCharToken> (265)
+    CHARPTR <transToken> (266) 10
+    COMMA <transToken> (267)
+    CROSS <transToken> (268)
+    CROSSCROSS <transToken> (269)
+    DASH <transToken> (270)
+    DASHDASH <transToken> (271)
+    ELSE <transToken> (272)
+    EQUALS <transToken> (273)
+    FALSE <transToken> (274)
+    FROMCONSOLE <transToken> (275)
+    ID <transIDToken> (276) 12
+    IF <transToken> (277)
+    INT <transToken> (278) 6
+    INTLITERAL <transIntToken> (279)
+    INTPTR <transToken> (280) 7
+    GREATER <transToken> (281)
+    GREATEREQ <transToken> (282)
+    LBRACE <transToken> (283)
+    LCURLY <transToken> (284)
+    LESS <transToken> (285)
+    LESSEQ <transToken> (286)
+    LPAREN <transToken> (287)
+    NOT <transToken> (288)
+    NOTEQUALS <transToken> (289)
+    NULLPTR <transToken> (290)
+    OR <transToken> (291)
+    RBRACE <transToken> (292)
+    RCURLY <transToken> (293)
+    RETURN <transToken> (294)
+    RPAREN <transToken> (295)
+    SEMICOLON <transToken> (296) 4
+    SLASH <transToken> (297)
+    STAR <transToken> (298)
+    STRLITERAL <transStrToken> (299)
+    TOCONSOLE <transToken> (300)
+    TRUE <transToken> (301)
+    VOID <transToken> (302) 11
+    WHILE <transToken> (303)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (49)
+        on left: 0
+    program (50)
+        on left: 1
+        on right: 0
+    globals (51)
+        on left: 2 3
+        on right: 1 2
+    decl (52)
+        on left: 4
+        on right: 2
+    varDecl (53)
+        on left: 5
+        on right: 4
+    type (54)
+        on left: 6 7 8 9 10 11
+        on right: 5
+    id (55)
+        on left: 12
+        on right: 5
+
+
+State 0
+
+    0 $accept: . program "end file"
+
+    $default  reduce using rule 3 (globals)
+
+    program  go to state 1
+    globals  go to state 2
+
+
+State 1
+
+    0 $accept: program . "end file"
+
+    "end file"  shift, and go to state 3
+
+
+State 2
+
+    1 program: globals .
+    2 globals: globals . decl
+
+    BOOL     shift, and go to state 4
+    CHAR     shift, and go to state 5
+    CHARPTR  shift, and go to state 6
+    INT      shift, and go to state 7
+    INTPTR   shift, and go to state 8
+    VOID     shift, and go to state 9
+
+    $default  reduce using rule 1 (program)
+
+    decl     go to state 10
+    varDecl  go to state 11
+    type     go to state 12
+
+
+State 3
+
+    0 $accept: program "end file" .
+
+    $default  accept
+
+
+State 4
+
+    8 type: BOOL .
+
+    $default  reduce using rule 8 (type)
+
+
+State 5
+
+    9 type: CHAR .
+
+    $default  reduce using rule 9 (type)
+
+
+State 6
+
+   10 type: CHARPTR .
+
+    $default  reduce using rule 10 (type)
+
+
+State 7
+
+    6 type: INT .
+
+    $default  reduce using rule 6 (type)
+
+
+State 8
+
+    7 type: INTPTR .
+
+    $default  reduce using rule 7 (type)
+
+
+State 9
+
+   11 type: VOID .
+
+    $default  reduce using rule 11 (type)
+
+
+State 10
+
+    2 globals: globals decl .
+
+    $default  reduce using rule 2 (globals)
+
+
+State 11
+
+    4 decl: varDecl . SEMICOLON
+
+    SEMICOLON  shift, and go to state 13
+
+
+State 12
+
+    5 varDecl: type . id
+
+    ID  shift, and go to state 14
+
+    id  go to state 15
+
+
+State 13
+
+    4 decl: varDecl SEMICOLON .
+
+    $default  reduce using rule 4 (decl)
+
+
+State 14
+
+   12 id: ID .
+
+    $default  reduce using rule 12 (id)
+
+
+State 15
+
+    5 varDecl: type id .
+
+    $default  reduce using rule 5 (varDecl)
