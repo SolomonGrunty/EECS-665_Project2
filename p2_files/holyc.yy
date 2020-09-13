@@ -127,17 +127,18 @@ project)
 */
 program 	: globals
 
-globals 	: globals decl 
+globals 	: globals decl
+			| /* epsilon */
 
 decl 		: varDecl SEMICOLON
 			| fnDecl
 
 varDecl 	: type id
 
-
 type 		: INT
 			| INTPTR
-			| BOOL 
+			| BOOL
+			| BOOLPTR
 			| CHAR
 			| CHARPTR
 			| VOID
@@ -149,11 +150,14 @@ formals		: LPAREN RPAREN
 
 formalsList	: formalDecl
 	    	| formalDecl COMMA formalsList
+
 formalDecl	: type id
 
 fnBody		: LCURLY stmtList RCURLY
 
+
 stmtList	: stmtList stmt
+			| /* epsilon */
 
 stmt		: varDecl SEMICOLON
 			| assignExp SEMICOLON
@@ -171,6 +175,7 @@ assignExp	: lval ASSIGN exp
 
 fncall		: id LPAREN RPAREN
 			| id LPAREN actualsList RPAREN
+
 actualsList	: exp
 			| actualsList COMMA exp
 
@@ -200,10 +205,12 @@ term	: lval
 		| NULLPTR
 		| LPAREN exp RPAREN
 		| fncall
+
 lval	: id
       	| id LBRACE exp RBRACE
 		| AT id
 		| CARAT id
+
 id		: ID
 
 %%
