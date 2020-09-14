@@ -1,6 +1,13 @@
-int myfunction() {
-    int age;
+void main(){
 
-    age = 32;
-    return age;
+  intptr a;
+
+  int b;
+
+  a = ^b;
+
+  a[0] = 11;
+
+  @a = 12;
+
 }

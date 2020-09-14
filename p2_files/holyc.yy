@@ -120,7 +120,7 @@ project)
 %left NOT
 %left STAR SLASH
 %left CROSS DASH
-%nonassoc GREATER GREATEREQ LESS LESSEQ
+%nonassoc GREATER GREATEREQ LESS LESSEQ 
 %nonassoc EQUALS NOTEQUALS
 %left AND
 %left OR
@@ -128,10 +128,6 @@ project)
 
 %%
 
-/* TODO: add productions for the other nonterminals in the 
-   grammar and make sure that all of the productions of the 
-   given nonterminals are complete
-*/
 program 	: globals
 
 globals 	: globals decl
