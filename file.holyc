@@ -1,0 +1,6 @@
+int myfunction() {
+    int age;
+
+    age = 32;
+    return age;
+}
